@@ -1,0 +1,17 @@
+.layout {
+  padding-left: 260px;
+  left: 0;
+}
+
+
+.sidebar {
+  /*left: 260px;*/
+  margin-left: -260px;
+  width: 260px;
+  position: fixed;
+}
+
+.contents{
+  padding-right: 260px;
+}
+
