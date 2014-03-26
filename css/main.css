@@ -1,17 +1,37 @@
 .layout {
-  padding-left: 260px;
+  padding-left: 290px;
+  width: 100%;
   left: 0;
 }
 
-
 .sidebar {
-  /*left: 260px;*/
-  margin-left: -260px;
-  width: 260px;
+  margin-left: -290px;
+  width: 290px;
+  height: 100%;
   position: fixed;
+  background: #434A54;
+}
+
+.sidebar-header {
+  padding: 10px;
+}
+
+.sidebar-title p{
+  font-size: 30px;
+  color: #CCD1D9;
+  line-height: 60px;
+}
+
+.sidebar-list li a{
+  color: #AAB2BD;
+}
+
+.sidebar-list li a:hover{
+  background: #656D78;
+  color: #ED5565;
 }
 
 .contents{
-  padding-right: 260px;
+  padding-top: 20px;
+  padding-left: 80px;
 }
-
