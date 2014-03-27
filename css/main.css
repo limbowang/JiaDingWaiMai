@@ -1,12 +1,12 @@
 .layout {
-  padding-left: 290px;
+  padding-left: 260px;
   width: 100%;
   left: 0;
 }
 
 .sidebar {
-  margin-left: -290px;
-  width: 290px;
+  margin-left: -260px;
+  width: 260px;
   height: 100%;
   position: fixed;
   background: #434A54;
@@ -14,12 +14,18 @@
 
 .sidebar-header {
   padding: 10px;
+  height: auto;
 }
 
 .sidebar-title p{
   font-size: 30px;
   color: #CCD1D9;
   line-height: 60px;
+}
+
+.sidebar-list {
+  height: auto;
+  overflow-y: scroll;
 }
 
 .sidebar-list li a{
