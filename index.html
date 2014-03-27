@@ -19,10 +19,10 @@
       </div>
       <div class="form-search search-only">
         <i class="search-icon glyphicon glyphicon-search"></i>
-        <input id="search-box" class="form-control search-query" type="text">
+        <input id="search-box" oninput="OnSearchInput(event)" class="form-control search-query" type="text">
       </div>
     </div>
-    <ul class="nav sidebar-list">
+    <ul class="nav sidebar-list" id="sidebar-list">
       <li><a href="#">哈哈</a></li>
       <li><a href="#">呵呵</a></li>
       <li><a href="#">哦哦</a></li>
