@@ -38,7 +38,7 @@ function done(err, results){
 
   var outputFilename = 'data/mergedData.json';
 
-  fs.writeFile(outputFilename, JSON.stringify(ret), function(err){
+  fs.writeFile(outputFilename, JSON.stringify(ret, null, 2), function(err){
     if(err) throw err;
     console.log(outputFilename + "saved.");
   });
