@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(241, 242, 246);
+}
+
 .layout {
   padding-left: 260px;
   width: 100%;
@@ -15,6 +19,7 @@
 .sidebar-header {
   padding: 10px;
   height: auto;
+  background: #434A54;
 }
 
 .sidebar-title p{
@@ -23,9 +28,15 @@
   line-height: 60px;
 }
 
+.sidebar-content {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+}
+
 .sidebar-list {
+  position: relative;
   height: auto;
-  overflow-y: scroll;
 }
 
 .sidebar-list li a{
