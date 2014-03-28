@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/main.css">
 
   <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/ejs_production.js"></script>
 
 </head>
 <body>
@@ -24,103 +25,22 @@
       </div>
     </div>
     <div class="sidebar-content" id="sidebar-content">
-      <ul class="nav sidebar-list" id="sidebar-list">
-        <li><a href="#">哈哈1</a></li>
-        <li><a href="#">呵呵2</a></li>
-        <li><a href="#">哦哦3</a></li>
-        <li><a href="#">呵呵4</a></li>
-        <li><a href="#">哦哦5</a></li>
-        <li><a href="#">哈哈11</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">哈哈</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">哈哈</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">哈哈</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">呵呵</a></li>
-        <li><a href="#">哦哦</a></li>
-        <li><a href="#">哈哈</a></li>
-        <li><a href="#">11</a></li>
-      </ul>
+      <ul class="nav sidebar-list" id="sidebar-list"></ul>
     </div>
   </div>
 
   <div class="container-fluid col-md-11">
     <div class=" contents">
-      <div class="col-md-6">
-        <div class="thumbnail">
-          <img class="img-rounded" src="img/xinruyi.jpg" alt="无法载入">
-          <div class="caption">
-            <p class="title">鑫如意</p>
-
-            <p class="content">18916013178</p>
-          </div>
-        </div>
-        <div class="thumbnail">
-          <img class="img-rounded" src="img/xinruyi.jpg" alt="无法载入">
-
-          <div class="caption">
-            <p class="title">鑫如意</p>
-
-            <p class="content">18916013178</p>
-          </div>
-        </div>
-        <div class="thumbnail">
-          <img class="img-rounded" src="img/xinruyi.jpg" alt="无法载入">
-
-          <div class="caption">
-            <p class="title">鑫如意</p>
-
-            <p class="content">18916013178</p>
-          </div>
-        </div>
-        <div class="thumbnail">
-          <img class="img-rounded" src="img/xinruyi.jpg" alt="无法载入">
-
-          <div class="caption">
-            <p class="title">鑫如意</p>
-
-            <p class="content">18916013178</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="thumbnail">
-          <img class="img-rounded" src="img/xinruyi.jpg" alt="无法载入">
-
-          <div class="caption">
-            <p class="title">鑫如意</p>
-
-            <p class="content">18916013178</p>
-          </div>
-        </div>
-        <div class="thumbnail">
-          <img class="img-rounded" src="img/xinruyi.jpg" alt="无法载入">
-
-          <div class="caption">
-            <p class="title">鑫如意</p>
-
-            <p class="content">18916013178</p>
-          </div>
-        </div>
-      </div>
+      <div class="col-md-6" id="content-left"></div>
+      <div class="col-md-6" id="ocntent-right"></div>
     </div>
   </div>
 </div>
+
 <div id="image-extended">
   <img class="center-block" src="" alt="无法显示">
 </div>
 <script src="js/main.js"></script>
+
 </body>
 </html>
