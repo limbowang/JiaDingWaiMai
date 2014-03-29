@@ -63,6 +63,15 @@ $(document).ready(function () {
       var html = new EJS({url: 'templates/sidebar-list.ejs'}).render(data);
       document.getElementById('sidebar-list').innerHTML += html;
     });
+    $.getJSON('data/contents-left.json', function( data ){
+      var html = new EJS({url: 'templates/contents.ejs'}).render(data);
+      document.getElementById('contents-left').innerHTML += html;
+    });
+    $.getJSON('data/contents-right.json', function( data ){
+      var html = new EJS({url: 'templates/contents.ejs'}).render(data);
+      document.getElementById('contents-right').innerHTML += html;
+    });
+
   }());
 
 });
