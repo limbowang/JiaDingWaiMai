@@ -2,6 +2,8 @@ var fs = require('fs');
 
 var DIR = 'data';
 var results = [];
+var contents_left = [];
+var contents_right = [];
 
 fs.readdir(DIR, function(err, list) {
   if(err) throw err;
@@ -16,11 +18,16 @@ fs.readdir(DIR, function(err, list) {
           fs.readFile(file, 'utf8', function(err, data) {
             if(err) throw err;
             results.push(JSON.parse(data));
-            if(!--len) done(null, results);
+            if(results.length % 2 != 0){
+              contents_left.push(JSON.parse(data));
+            } else {
+              contents_right.push(JSON.parse(data));
+            }
+            if(!--len) done(null);
           });
           //results.push(file);
         } else {
-          if(!--len) done(null, results);
+          if(!--len) done(null);
         }
       }
     });
@@ -29,21 +36,24 @@ fs.readdir(DIR, function(err, list) {
 });
 
 
-function done(err, results){
+function done(err){
   if(err) throw err;
 
+  writeResults('data/mergedData.json', results);
+  writeResults('data/contents-left.json', contents_left);
+  writeResults('data/contents-right.json', contents_right);
+}
+
+function writeResults(filename, results){
   var ret = {
     items: results
   }
 
-  var outputFilename = 'data/mergedData.json';
-
-  fs.writeFile(outputFilename, JSON.stringify(ret, null, 2), function(err){
+  fs.writeFile(filename, JSON.stringify(ret, null, 2), function(err){
     if(err) throw err;
-    console.log(outputFilename + "saved.");
+    console.log(filename+ "saved.");
   });
 }
-
 
 function getExtension(filename){
   var i = filename.lastIndexOf('.');
