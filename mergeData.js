@@ -13,23 +13,27 @@ fs.readdir(DIR, function(err, list) {
   list.forEach(function(file) {
     file = DIR + '/' + file;
     fs.stat(file, function(err, stat) {
-      if(stat && stat.isFile()){
-        if(getExtension(file).toLowerCase() == '.json'){
-          fs.readFile(file, 'utf8', function(err, data) {
-            if(err) throw err;
-            results.push(JSON.parse(data));
-            if(results.length % 2 != 0){
-              contents_left.push(JSON.parse(data));
-            } else {
-              contents_right.push(JSON.parse(data));
-            }
-            if(!--len) done(null);
-          });
-          //results.push(file);
-        } else {
-          if(!--len) done(null);
-        }
+      if(err) throw err;
+      if(!(stat && stat.isFile())) {
+        if(!--len) done(null);
+        return;
       }
+      if(getExtension(file).toLowerCase() != '.json'){
+        if(!--len) done(null);
+        return;
+      }
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if(err) throw err;
+
+        results.push(JSON.parse(data));
+        if(results.length % 2 != 0){
+          contents_left.push(JSON.parse(data));
+        } else {
+          contents_right.push(JSON.parse(data));
+        }
+        if(!--len) done(null);
+      });
     });
   });
 
@@ -39,9 +43,9 @@ fs.readdir(DIR, function(err, list) {
 function done(err){
   if(err) throw err;
 
-  writeResults('data/mergedData.json', results);
-  writeResults('data/contents-left.json', contents_left);
-  writeResults('data/contents-right.json', contents_right);
+  writeResults('data/merged/mergedData.json', results);
+  writeResults('data/merged/contents-left.json', contents_left);
+  writeResults('data/merged/contents-right.json', contents_right);
 }
 
 function writeResults(filename, results){
