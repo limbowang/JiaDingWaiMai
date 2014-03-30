@@ -1,7 +1,8 @@
 {
-  "name": "湘之味简餐",
+  "id": "xiangzhiwei",
+  "name": "湘之味",
   "description": "",
-  "imgs": ["xiangzhiwei.jpg"],
-  "tel": "18621963498"
+  "img": "xiangzhiwei.jpg",
+  "link": "18621963498"
 }
 

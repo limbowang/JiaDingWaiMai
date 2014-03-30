@@ -1,9 +1,9 @@
 <% for(var i=0; i<items.length; i++){ %>
-<div class="thumbnail" name=<%= items[i].name %>>
-  <img class="img-rounded" src=<%= "img/"+items[i].imgs[0] %> alt="无法载入">
+<div class="thumbnail" id=<%= items[i].id%>>
+  <img class="img-rounded" src=<%= "img/"+items[i].img %> alt=<%= items[i].name %>>
   <div class="caption">
     <p class="title"><%= items[i].name %></p>
-    <p class="content"><%= items[i].tel %></p>
+    <p class="content"><%= items[i].link %></p>
   </div>
 </div>
 <% } %>
