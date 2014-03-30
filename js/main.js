@@ -39,7 +39,7 @@ $(document).ready(function () {
     })
   });
 
-  $(".img-rounded").bind("click", function() {
+  $(document).delegate('.img-rounded', "click", function() {
     $("#image-extended").show().find("img").attr("src", $(this).attr("src"));
   });
 
