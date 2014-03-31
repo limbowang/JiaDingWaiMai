@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "id": "fujianshaxianxiaochi",
-      "name": "福建沙县小吃",
-      "description": "15元起送",
-      "img": "fujianshaxianxiaochi.jpg",
-      "link": "13764736286"
+      "id": "kjc",
+      "name": "肯德基",
+      "description": "",
+      "img": "kfc.jpg",
+      "link": "www.KFC.com.cn"
     },
     {
       "id": "lanzhouniuroulamian",
@@ -36,11 +36,11 @@
       "link": "13045614606"
     },
     {
-      "id": "xiangzhiwei",
-      "name": "湘之味",
-      "description": "",
-      "img": "xiangzhiwei.jpg",
-      "link": "18621963498"
+      "id": "xiangyuege",
+      "name": "湘粤阁",
+      "description": "10元起送",
+      "img": "xiangyuege.jpg",
+      "link": "13801779880"
     }
   ]
 }
