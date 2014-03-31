@@ -1,13 +1,6 @@
 {
   "items": [
     {
-      "id": "coco",
-      "name": "CoCo",
-      "description": "2公里以内6杯起送，外送不参与门市优惠。",
-      "img": "coco.jpg",
-      "link": "18221308788"
-    },
-    {
       "id": "fujianshaxianxiaochi",
       "name": "福建沙县小吃",
       "description": "15元起送",
@@ -20,6 +13,13 @@
       "description": "",
       "img": "kfc.jpg",
       "link": "www.KFC.com.cn"
+    },
+    {
+      "id": "coco",
+      "name": "CoCo",
+      "description": "2公里以内6杯起送，外送不参与门市优惠。",
+      "img": "coco.jpg",
+      "link": "18221308788"
     },
     {
       "id": "lanzhouniuroulamian",
@@ -71,6 +71,13 @@
       "link": "13045614606"
     },
     {
+      "id": "xinruyi",
+      "name": "鑫如意",
+      "description": "",
+      "img": "xinruyi.jpg",
+      "link": "18916013178"
+    },
+    {
       "id": "xiangyuege",
       "name": "湘粤阁",
       "description": "10元起送",
@@ -83,13 +90,6 @@
       "description": "",
       "img": "xiangzhiwei.jpg",
       "link": "18621963498"
-    },
-    {
-      "id": "xinruyi",
-      "name": "鑫如意",
-      "description": "",
-      "img": "xinruyi.jpg",
-      "link": "18916013178"
     }
   ]
 }
