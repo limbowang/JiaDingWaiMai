@@ -47,7 +47,7 @@ $(document).ready(function () {
     .bind("mousewheel DOMMouseScroll", function (e) {
       e.preventDefault();
     })
-    .live("click", function () {
+    .delegate(this, "click", function () {
       $(this).hide();
     })
     .find("img").bind("click", function (e) {
