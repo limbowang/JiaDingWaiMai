@@ -1,12 +1,3 @@
-@font-face {
-  font-family: "Hiragino";
-  src: url("../fonts/hiragino-sans-gb-w3.ttf");
-}
-
-* {
-  font-family: "Hiragino";
-}
-
 body {
   background-color: rgb(241, 242, 246);
 }
@@ -76,16 +67,12 @@ body {
 }
 
 #image-extended {
-  position: absolute;
+  position: fixed;
   display: none;
   top: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  /* For IE 5.5 - 7*/
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
-  /* For IE 8*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
 }
 
 #image-extended img {
