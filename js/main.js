@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function () {
-  $(window).bind('load resize', function () {
+  $(window).on('load resize', function () {
     $(".sidebar").each(function () {
       var sidebarList = $(this).find(".sidebar-list");
       var height = $(this).height() - $(this).find(".sidebar-header").height();
@@ -11,7 +11,7 @@ $(document).ready(function () {
     })
   });
 
-  $(".sidebar-content").bind("mousewheel DOMMouseScroll", function (e) {
+  $(".sidebar-content").on('mousewheel DOMMouseScroll', function (e) {
     e.preventDefault();
     var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
     if (d > 0) {
@@ -19,18 +19,16 @@ $(document).ready(function () {
     } else {
       d = -120
     }
-    var sidebarList = $(this).find(".sidebar-list");
+    var sidebarList = $(this).find('.sidebar-list');
     var top = sidebarList.position().top;
     var leftHeight = sidebarList.height() + top;
-    console.log(leftHeight);
-    console.log($(this).height());
     if (!(d > 0 && top >= 0) && !(d < 0 && leftHeight < $(this).height()))
-      sidebarList.css("top", top + d);
+      sidebarList.css('top', top + d);
   });
 
-  $("#search-box").bind('input propertychange', function () {
+  $('#search-box').on('input propertychange', function () {
     var input = $(this).val();
-    $("#sidebar-list").find("li").each(function () {
+    $('#sidebar-list').find('li').each(function () {
       if ($(this).text().indexOf(input) < 0) {
         $(this).hide();
       } else {
@@ -39,24 +37,80 @@ $(document).ready(function () {
     })
   });
 
-  $(document).delegate('.img-rounded', "click", function () {
-    $("#image-extended").show().find("img").attr("src", $(this).attr("src"));
+  $('#contents').on('click', '.img-rounded', function () {
+    var
+      imgExt = $('#image-extended'),
+      imgMain;
+    imgExt
+      .show()
+      .append('<img src="' + $(this).attr('src') + '"/>');
+    imgMain = imgExt.find('img');
+    imgMain.css({
+      'top': imgMain.height() < $(window).height() ? ($(window).height() - imgMain.height()) / 2 : 0
+    })
   });
 
-  $("#image-extended")
-    .bind("mousewheel DOMMouseScroll", function (e) {
-      e.preventDefault();
-    })
-    .delegate(this, "click", function () {
-      $(this).hide();
-    })
-    .find("img").bind("click", function (e) {
-      if (e.stopPropagation) {
-        e.stopPropagation();
-      } else {
-        e.cancelBubble = true;
-      }
-    })
+  (function () {
+    var
+      mousedownX = 0,
+      mousedownY = 0,
+      posX = 0,
+      posY = 0,
+      isMouseDown = false;
+
+    $('#image-extended')
+      .on('mousewheel DOMMouseScroll', function (e) {
+        e.preventDefault();
+      })
+      .on('click', function () {
+        $(this).hide().find('img').remove();
+        mousedownX = mousedownY = 0;
+      })
+      .on('mousemove', function (e) {
+        e.preventDefault();
+        if (isMouseDown) {
+          $(this).find('img').css({
+            'left': e.screenX - mousedownX + posX,
+            'top': e.screenY - mousedownY + posY
+          })
+        }
+      })
+      .on('mousedown', 'img', function (e) {
+        e.preventDefault();
+        mousedownX = e.screenX;
+        mousedownY = e.screenY;
+        posX = parseInt($(this).css('left').replace('px', ''));
+        posY = parseInt($(this).css('top').replace('px', ''));
+        isMouseDown = true;
+      })
+      .on('mouseup', 'img', function () {
+        isMouseDown = false;
+      })
+      .on('click', 'img', function (e) {
+        if (e.stopPropagation) {
+          e.stopPropagation();
+        } else {
+          e.cancelBubble = true;
+        }
+      })
+      .on('mousewheel DOMMouseScroll', 'img', function (e) {
+        var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
+        var width = $(this).width();
+        var height = $(this).height();
+        var ratio = height / width;
+        if (d > 0 && width < $(window).width()) {
+          $(this).css({
+            'width': width + 30,
+            'height': (width + 30) * ratio
+          });
+        } else if (d < 0 && width > 160) {
+          $(this).css({
+            'width': width - 30,
+            'height': (width - 30) * ratio
+          });
+        }
+      });
+  }());
 
   (function loadData() {
     $.getJSON('data/merged/mergedData.json', function (data) {
