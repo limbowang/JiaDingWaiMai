@@ -3,12 +3,15 @@ var fs = require('fs');
 
 var INPUT_DIR = '../img_src/pending/';
 var OUTPUT_DIR = '../img_src/done/'; 
+var MAX_WIDTH_SMALL = 415;
+var MAX_WIDTH_LARGE = 1024;
+
 var num = 0;
 
 fs.readdir(INPUT_DIR, function(err, list) {
   if(err) throw err;
   var len = list.length;
-  if(!len) return;
+  if(!len) done();
 
   list.forEach(function(filename) {
     fs.stat(INPUT_DIR+filename, function(err, stat) {
@@ -22,19 +25,28 @@ fs.readdir(INPUT_DIR, function(err, list) {
         return;
       }
 
-      compress(filename, function(err){
+      compress(filename, MAX_WIDTH_LARGE, function(err){
         if(err) throw err; 
 
-        console.log(filename + ' compessed');
+        console.log(filename + '_' + MAX_WIDTH_LARGE + ' compessed');
+      });
+      compress(filename, MAX_WIDTH_SMALL, function(err){
+        if(err) throw err; 
+
+        console.log(filename + '_' + MAX_WIDTH_SMALL + ' compessed');
         num++;
         if(!--len) done();
       });
+
     });
   });  
 });
 
-function compress(filename, callback){
-  exec('convert -resize 10% '+INPUT_DIR+filename+' '+OUTPUT_DIR+filename, callback); 
+function compress(filename, maxWidth, callback){
+  var command = 'convert -resize ' + '\"' + maxWidth + '>\" ';
+  command += INPUT_DIR + filename + ' ' 
+  command += OUTPUT_DIR + filename + '_' + maxWidth;
+  exec(command, callback); 
 }
 
 function done(){

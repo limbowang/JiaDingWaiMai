@@ -1,18 +1,18 @@
 {
   "items": [
     {
-      "id": "fujianshaxianxiaochi",
-      "name": "福建沙县小吃",
-      "description": "15元起送",
-      "img": "fujianshaxianxiaochi.jpg",
-      "link": "13764736286"
+      "id": "lanzhouniuroulamian",
+      "name": "兰州牛肉拉面",
+      "description": "",
+      "img": "lanzhouniuroulamian.jpg",
+      "link": "18616703438"
     },
     {
-      "id": "coco",
-      "name": "CoCo",
-      "description": "2公里以内6杯起送，外送不参与门市优惠。",
-      "img": "coco.jpg",
-      "link": "18221308788"
+      "id": "kjc",
+      "name": "肯德基",
+      "description": "",
+      "img": "kfc.jpg",
+      "link": "www.KFC.com.cn"
     },
     {
       "id": "manweilou",
@@ -22,25 +22,11 @@
       "link": "13020178887"
     },
     {
-      "id": "quanjia",
-      "name": "全家",
-      "description": "盒饭五盒，送指定大瓶饮料一瓶",
-      "img": "quanjia.jpg",
-      "link": "13761139129"
-    },
-    {
-      "id": "shihuikuaican",
-      "name": "食惠快餐",
+      "id": "shishangkuaican",
+      "name": "食尚快餐",
       "description": "",
-      "img": "shihuikuaican.jpg",
-      "link": "18801802143"
-    },
-    {
-      "id": "xinruyi",
-      "name": "鑫如意",
-      "description": "",
-      "img": "xinruyi.jpg",
-      "link": "18916013178"
+      "img": "shishangkuaican.jpg",
+      "link": "13045614606"
     },
     {
       "id": "xiangzhiwei",
@@ -48,6 +34,20 @@
       "description": "",
       "img": "xiangzhiwei.jpg",
       "link": "18621963498"
+    },
+    {
+      "id": "quanjia",
+      "name": "全家",
+      "description": "盒饭五盒，送指定大瓶饮料一瓶",
+      "img": "quanjia.jpg",
+      "link": "13761139129"
+    },
+    {
+      "id": "qishike",
+      "name": "奇士客",
+      "description": "满15元起送",
+      "img": "qishike.jpg",
+      "link": "69583667"
     }
   ]
 }
