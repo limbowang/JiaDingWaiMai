@@ -43,7 +43,7 @@ $(document).ready(function () {
       imgMain;
     imgExt
       .show()
-      .append('<img src="' + $(this).attr('src') + '"/>');
+      .append('<img src="img\\' + $(this).parent().attr('id') + '.jpg_1024"/>');
     imgMain = imgExt.find('img');
     imgMain.css({
       'top': imgMain.height() < $(window).height() ? ($(window).height() - imgMain.height()) / 2 : 0
