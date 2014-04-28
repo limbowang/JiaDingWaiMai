@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    meta charset="UTF-8"
+    title 嘉定外卖
+    link rel="stylesheet" href="css/bootstrap.min.css"
+    link rel="stylesheet" href="css/bootflat.min.css"
+    link rel="stylesheet" href="css/main.css"
+
+    script src="js/jquery-1.11.0.min.js"
+
+  body
+    .layout
+      .sidebar
+        .sidebar-header
+          .sidebar-title
+            a href="#" 嘉定外卖
+          .input-group
+            span.input-group-addon
+              i.search-icon.glyphicon.glyphicon-search
+            input.form-control#search-box type="text" 
+
+        .sidebar-content#sidebar-content
+          ul.nav.sidebar-list#sidebar-list
+            == sidebar
+        
+      #contents
+        .col-md-6#contents-left
+          == contents_left
+        .col-md-6#contents-right
+          == contents_right
+
+
+    #image-extended
+
+    script src="js/main.js"
