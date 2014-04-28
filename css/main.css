@@ -26,7 +26,7 @@ body {
   background: #434A54;
 }
 
-.sidebar-title a{
+.sidebar-title a {
   font-size: 30px;
   color: #CCD1D9;
   line-height: 60px;
@@ -42,16 +42,16 @@ body {
   position: relative;
 }
 
-.sidebar-list li a{
+.sidebar-list li a {
   color: #AAB2BD;
 }
 
-.sidebar-list li a:hover{
+.sidebar-list li a:hover {
   background: #656D78;
   color: #ED5565;
 }
 
-#contents{
+#contents {
   padding-top: 20px;
   padding-left: 80px;
 }
@@ -82,6 +82,10 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.6) url("../img/ajax-loading.gif") center no-repeat;
+}
+
+#image-extended.loaded{
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -93,4 +97,5 @@ body {
   left: 0;
   top: 0;
   height: 90%;
+  visibility: hidden;
 }
