@@ -1,30 +1,45 @@
 var fs = require('fs');
+var path = require('path');
 
-var DIR = '../data';
+var DIR = '../data/';
 var results = [];
 var contents_left = [];
 var contents_right = [];
 
 fs.readdir(DIR, function(err, list) {
-  if(err) throw err;
+  if(err) {
+    throw err;
+  }
   var len = list.length;
-  if(!len) return;
+  if(!len) {
+    return;
+  }
 
   list.forEach(function(file) {
-    file = DIR + '/' + file;
+    file = path.join(DIR, file);
     fs.stat(file, function(err, stat) {
-      if(err) throw err;
+      if(err) {
+        throw err;
+      }
       if(!(stat && stat.isFile())) {
-        if(!--len) done(null);
+        if(!--len) {
+          done(null);
+        }
+
         return;
       }
-      if(getExtension(file).toLowerCase() != '.json'){
-        if(!--len) done(null);
+      if(path.extname(file).toLowerCase() != '.json'){
+        if(!--len) {
+          done(null);
+        }
+
         return;
       }
 
       fs.readFile(file, 'utf8', function(err, data) {
-        if(err) throw err;
+        if(err) {
+          throw err;
+        }
 
         results.push(JSON.parse(data));
         if(results.length % 2 != 0){
@@ -32,20 +47,23 @@ fs.readdir(DIR, function(err, list) {
         } else {
           contents_right.push(JSON.parse(data));
         }
-        if(!--len) done(null);
+        if(!--len) {
+          done(null);
+        }
       });
     });
   });
-
 });
 
 
 function done(err){
-  if(err) throw err;
+  if(err) {
+    throw err;
+  }
 
-  writeResults(DIR+'/merged/mergedData.json', results);
-  writeResults(DIR+'/merged/contents-left.json', contents_left);
-  writeResults(DIR+'/merged/contents-right.json', contents_right);
+  writeResults(path.join(DIR, '/merged/mergedData.json'), results);
+  writeResults(path.join(DIR, '/merged/contents-left.json'), contents_left);
+  writeResults(path.join(DIR, '/merged/contents-right.json'), contents_right);
 }
 
 function writeResults(filename, results){
@@ -54,12 +72,11 @@ function writeResults(filename, results){
   }
 
   fs.writeFile(filename, JSON.stringify(ret, null, 2), function(err){
-    if(err) throw err;
-    console.log(filename+ "saved.");
+    if(err) {
+      throw err;
+    }
+
+    console.log(filename+ " saved.");
   });
 }
 
-function getExtension(filename){
-  var i = filename.lastIndexOf('.');
-  return (i < 0) ? '' : filename.substr(i);
-}
