@@ -8,32 +8,18 @@
       "link": "13764736286"
     },
     {
-      "id": "coco",
-      "name": "CoCo",
-      "description": "2公里以内6杯起送，外送不参与门市优惠。",
-      "img": "coco.jpg",
-      "link": "18221308788"
-    },
-    {
-      "id": "shihuikuaican",
-      "name": "食惠快餐",
+      "id": "lanzhouniuroulamian",
+      "name": "兰州牛肉拉面",
       "description": "",
-      "img": "shihuikuaican.jpg",
-      "link": "18801802143"
+      "img": "lanzhouniuroulamian.jpg",
+      "link": "18616703438"
     },
     {
-      "id": "xiangyuege",
-      "name": "湘粤阁",
-      "description": "10元起送",
-      "img": "xiangyuege.jpg",
-      "link": "13801779880"
-    },
-    {
-      "id": "xinruyi",
-      "name": "鑫如意",
-      "description": "",
-      "img": "xinruyi.jpg",
-      "link": "18916013178"
+      "id": "qishike",
+      "name": "奇士客",
+      "description": "满15元起送",
+      "img": "qishike.jpg",
+      "link": "69583667"
     },
     {
       "id": "rehuogongfu",
@@ -41,6 +27,20 @@
       "description": "加满18元送麻酱3元或四川泡菜2元。可加料：醋，香油，花椒；微辣，中辣，重辣。",
       "img": "rehuogongfu.jpg",
       "link": "13524809743"
+    },
+    {
+      "id": "shishangkuaican",
+      "name": "食尚快餐",
+      "description": "",
+      "img": "shishangkuaican.jpg",
+      "link": "13045614606"
+    },
+    {
+      "id": "xiangzhiwei",
+      "name": "湘之味",
+      "description": "",
+      "img": "xiangzhiwei.jpg",
+      "link": "18621963498"
     }
   ]
 }
