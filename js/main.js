@@ -3,24 +3,27 @@
  */
 
 $(document).ready(function () {
-  $(window).on('load resize', function () {
-    $(".sidebar").each(function () {
-      var sidebarList = $(this).find(".sidebar-list");
-      var height = $(this).height() - $(this).find(".sidebar-header").height();
-      $(".sidebar-content").css("height", height - 20);
-    })
-  });
-
-  $(".sidebar-content").on('mousewheel DOMMouseScroll', function (e) {
+  $('.sidebar-content').on('mousewheel DOMMouseScroll', function (e) {
     e.preventDefault();
     var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
     d = d > 0 ? 120 : -120;
     var sidebarList = $(this).find('.sidebar-list');
-    var top = sidebarList.position().top;
-    var leftHeight = sidebarList.height() + top;
-    if (!(d > 0 && top >= 0) && !(d < 0 && leftHeight < $(this).height()))
+    var top = parseInt(sidebarList.css('top').replace('px', ''));
+    console.log($(this).height());
+    console.log(sidebarList.height());
+    if (!(d > 0 && top >= 0) && !(d < 0 && sidebarList.height() + top - d < $(this).height()))
       sidebarList.css('top', top + d);
-  });
+  })
+    .on('click', function() {
+      var parent = $(this).parent();
+        parent.removeClass('open');
+    })
+    .on('click', '.sidebar-search', function(e) {
+      e.stopPropagation() || (e.cancelBubble = true);
+    })
+    .on('touchmove', function(e) {
+      e.preventDefault();
+    });
 
   $('#search-box').on('input propertychange', function () {
     var input = $(this).val();
@@ -31,6 +34,10 @@ $(document).ready(function () {
         $(this).show();
       }
     })
+  });
+
+  $('#pull-button').on('click', function() {
+    $('.sidebar').toggleClass('open');
   });
 
   $('#contents').on('click', '.img-rounded', function () {
@@ -93,7 +100,7 @@ $(document).ready(function () {
         var width = $(this).width();
         var height = $(this).height();
         var ratio = height / width;
-        if (d > 0 && width < $(window).width()) {
+        if (d > 0) {
           $(this).css({
             'width': width + 30,
             'height': (width + 30) * ratio
@@ -104,6 +111,10 @@ $(document).ready(function () {
             'height': (width - 30) * ratio
           });
         }
+      })
+      // for mobile
+      .on('touchmove', function(e) {
+        e.preventDefault();
       });
   }());
 
