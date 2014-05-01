@@ -18,7 +18,6 @@ body {
   margin-left: -260px;
   width: 260px;
   height: 100%;
-  background: #434A54;
 }
 
 .sidebar-header {
@@ -32,14 +31,30 @@ body {
   line-height: 60px;
 }
 
+#pull-button {
+  display: none;
+  cursor: pointer;
+}
+
 .sidebar-content {
   position: absolute;
   width: 100%;
+  height: 100%;
+  background: #434A54;
+}
+
+.sidebar-search {
+  padding: 10px;
+}
+
+.list-container {
+  height: 100%;
   overflow: hidden;
 }
 
 .sidebar-list {
   position: relative;
+  top: 0;
 }
 
 .sidebar-list li a {
@@ -82,10 +97,10 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6) url("../img/ajax-loading.gif") center no-repeat;
+  background: rgba(0, 0, 0, 0.6) url("ajax-loading.gif") center no-repeat;
 }
 
-#image-extended.loaded{
+#image-extended.loaded {
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -96,6 +111,91 @@ body {
   margin-right: auto;
   left: 0;
   top: 0;
-  height: 90%;
+  height: 80%;
   visibility: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .layout {
+    padding: 0;
+    width: 100%;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+    z-index: 1;
+  }
+
+  .sidebar-header {
+    width: 100%;
+    background: #ED5565;
+  }
+
+  .sidebar-title {
+    text-align: center;
+  }
+
+  .sidebar-title a {
+    line-height: 30px;
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  #pull-button {
+    display: block;
+  }
+
+  .sidebar-content {
+    padding-right: 30%;
+    background: rgba(0, 0, 0, 0);
+    visibility: hidden;
+  }
+
+  .sidebar-content .sidebar-search,
+  .sidebar-content .list-container {
+    position: relative;
+    background: #434A54;
+    left: -100%;
+  }
+
+  .sidebar.open {
+    height: 100%;
+  }
+
+  .sidebar.open .sidebar-content {
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.6);
+    transition: background 0.25s ease-out;
+    -webkit-transition: background 0.25s ease-out;
+    -moz-transition: background 0.25s ease-out;
+    -ms-transition: background 0.25s ease-out;
+    -o-transition: background 0.25s ease-out;
+  }
+
+  .sidebar.open .sidebar-content .sidebar-search,
+  .sidebar.open .sidebar-content .list-container {
+    left: 0;
+    transition: left 0.25s ease-out;
+    -webkit-transition: left 0.25s ease-out;
+    -moz-transition: left 0.25s ease-out;
+    -ms-transition: left 0.25s ease-out;
+    -o-transition: left 0.25s ease-out;
+  }
+
+  #contents {
+    padding-top: 60px;
+    padding-left: 0;
+  }
+
+  #image-extended img {
+    width: 90%;
+    height: auto;
+  }
+
+  .thumbnail .title,
+  .thumbnail .content {
+    text-align: center;
+  }
 }
