@@ -3,26 +3,22 @@
  */
 
 $(document).ready(function () {
-  $('.sidebar-content').on('mousewheel DOMMouseScroll', function (e) {
-    e.preventDefault();
-    var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
-    d = d > 0 ? 120 : -120;
-    var sidebarList = $(this).find('.sidebar-list');
-    var top = parseInt(sidebarList.css('top').replace('px', ''));
-    console.log($(this).height());
-    console.log(sidebarList.height());
-    if (!(d > 0 && top >= 0) && !(d < 0 && sidebarList.height() + top - d < $(this).height()))
-      sidebarList.css('top', top + d);
-  })
-    .on('click', function() {
-      var parent = $(this).parent();
-        parent.removeClass('open');
-    })
-    .on('click', '.sidebar-search', function(e) {
-      e.stopPropagation() || (e.cancelBubble = true);
-    })
-    .on('touchmove', function(e) {
+  $('.sidebar-content')
+    .on('mousewheel DOMMouseScroll', function (e) {
       e.preventDefault();
+      var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
+      d = d > 0 ? 120 : -120;
+      var sidebarList = $(this).find('.sidebar-list');
+      var top = parseInt(sidebarList.css('top').replace('px', ''));
+      if (!(d > 0 && top >= 0) && !(d < 0 && sidebarList.height() + top - d < $(this).height()))
+        sidebarList.css('top', top + d);
+    })
+    .on('click', function () {
+      var parent = $(this).parent();
+      parent.removeClass('open');
+    })
+    .on('click', '.sidebar-search', function (e) {
+      e.stopPropagation() || (e.cancelBubble = true);
     });
 
   $('#search-box').on('input propertychange', function () {
@@ -36,7 +32,7 @@ $(document).ready(function () {
     })
   });
 
-  $('#pull-button').on('click', function() {
+  $('#pull-button').on('click', function () {
     $('.sidebar').toggleClass('open');
   });
 
@@ -47,7 +43,7 @@ $(document).ready(function () {
     imgExt
       .show()
       .append('<img src="' + $(this).attr('src').replace('415', '1024') + '"/>');
-    imgMain = imgExt.find('img').load(function(){
+    imgMain = imgExt.find('img').load(function () {
       var windowHeight = $(window).height();
       var imgHeight = $(this).height();
       imgExt.addClass('loaded');
@@ -113,8 +109,20 @@ $(document).ready(function () {
         }
       })
       // for mobile
-      .on('touchmove', function(e) {
+      .on('touchstart', function (e) {
         e.preventDefault();
+        var touches = e.touches;
+        console.log(e);
+        if (touches.size() == 1) {
+          var touch = touches[0];
+          mousedownX = e.screenX;
+          mousedownY = e.screenY;
+          posX = parseInt($(this).css('left').replace('px', ''));
+          posY = parseInt($(this).css('top').replace('px', ''));
+        }
+      })
+      .on('touchmove', function (e) {
+        console.log(e);
       });
   }());
 
