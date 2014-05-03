@@ -16,9 +16,12 @@ def init
     Dir.mkdir $DESTINATION
   end
 
+  FileUtils.rm_r Dir.glob("#{$DESTINATION}/*")
+
   FileUtils.cp_r "./js", $DESTINATION   
   FileUtils.cp_r "./css", $DESTINATION   
   FileUtils.cp_r "./img", $DESTINATION   
+  FileUtils.cp_r "./fonts", $DESTINATION   
 end
 
 def generateIndex
