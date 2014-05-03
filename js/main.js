@@ -117,19 +117,4 @@ $(document).ready(function () {
         e.preventDefault();
       });
   }());
-
-  (function loadData() {
-    $.getJSON('data/merged/mergedData.json', function (data) {
-      document.getElementById('sidebar-list').innerHTML += new EJS({url: 'templates/sidebar-list.ejs'}).render(data);
-    });
-    $.getJSON('data/merged/contents-left.json', function (data) {
-      document.getElementById('contents-left').innerHTML += new EJS({url: 'templates/contents.ejs'}).render(data);
-    });
-    $.getJSON('data/merged/contents-right.json', function (data) {
-      document.getElementById('contents-right').innerHTML += new EJS({url: 'templates/contents.ejs'}).render(data);
-    });
-
-  }());
-
 });
-
