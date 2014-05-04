@@ -21,8 +21,11 @@ body {
 }
 
 .sidebar-header {
-  padding: 10px;
   background: #434A54;
+}
+
+.sidebar-title {
+  padding: 10px;
 }
 
 .sidebar-title a {
@@ -43,7 +46,7 @@ body {
   background: #434A54;
 }
 
-.sidebar-search {
+.sidebar-search .input-group {
   padding: 10px;
 }
 
