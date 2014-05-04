@@ -3,9 +3,12 @@
  */
 
 $(document).ready(function () {
+  $('.sidebar').on('mousewheel DOMMouseScroll', function (e) {
+    e.preventDefault();
+  });
+
   $('.sidebar-content')
     .on('mousewheel DOMMouseScroll', function (e) {
-      e.preventDefault();
       var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
       d = d > 0 ? 120 : -120;
       var sidebarList = $(this).find('.sidebar-list');
@@ -52,7 +55,6 @@ $(document).ready(function () {
         'visibility': 'visible'
       });
     });
-
   });
 
   (function () {
@@ -66,16 +68,16 @@ $(document).ready(function () {
       .on('mousewheel DOMMouseScroll', function (e) {
         e.preventDefault();
       })
-      .on('click', function () {
-        $(this).hide().find('img').remove();
+      .on('mousedown', function () {
+        $(this).hide().removeClass('loaded').find('img').remove();
         mousedownX = mousedownY = 0;
       })
-      .on('mousemove', function (e) {
+      .on('mousemove', 'img', function (e) {
         e.preventDefault();
         e = e || window.event;
         var button = e.buttons == undefined ? e.which : e.buttons;
         if (button == 1) {
-          $(this).find('img').css({
+          $(this).css({
             'left': e.screenX - mousedownX + posX,
             'top': e.screenY - mousedownY + posY
           })
@@ -83,19 +85,18 @@ $(document).ready(function () {
       })
       .on('mousedown', 'img', function (e) {
         e.preventDefault();
+        e.stopPropagation() || (e.cancelBubble = true);
         mousedownX = e.screenX;
         mousedownY = e.screenY;
         posX = parseInt($(this).css('left').replace('px', ''));
         posY = parseInt($(this).css('top').replace('px', ''));
       })
-      .on('click', 'img', function (e) {
-        e.stopPropagation() || (e.cancelBubble = true);
-      })
       .on('mousewheel DOMMouseScroll', 'img', function (e) {
-        var d = e.originalEvent.wheelDelta || -e.originalEvent.detail;
-        var width = $(this).width();
-        var height = $(this).height();
-        var ratio = height / width;
+        var
+          d = e.originalEvent.wheelDelta || -e.originalEvent.detail,
+          width = $(this).width(),
+          height = $(this).height(),
+          ratio = height / width;
         if (d > 0) {
           $(this).css({
             'width': width + 30,
@@ -107,22 +108,6 @@ $(document).ready(function () {
             'height': (width - 30) * ratio
           });
         }
-      })
-      // for mobile
-      .on('touchstart', function (e) {
-        e.preventDefault();
-        var touches = e.touches;
-        console.log(e);
-        if (touches.size() == 1) {
-          var touch = touches[0];
-          mousedownX = e.screenX;
-          mousedownY = e.screenY;
-          posX = parseInt($(this).css('left').replace('px', ''));
-          posY = parseInt($(this).css('top').replace('px', ''));
-        }
-      })
-      .on('touchmove', function (e) {
-        console.log(e);
       });
   }());
 });
