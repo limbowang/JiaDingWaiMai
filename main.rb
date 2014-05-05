@@ -88,16 +88,27 @@ module JiaDingWaiMai
     Dir.foreach("#{DATA_DIR}/img/pending") do |filename|
       next if not File.extname(filename).downcase =~ /\.jpg|\.png/
 
-      num += 1
-      img = MiniMagick::Image.open("#{DATA_DIR}/img/pending/#{filename}")
-      img.resize "#{img_width_large}"
-      img.write "#{DATA_DIR}/img/done/#{filename}_#{img_width_large}"  
-      puts "#{DATA_DIR}/img/done/#{filename}_#{img_width_large} compressed"
+      src_dir = "#{DATA_DIR}/img/pending/#{filename}"
+      des_dir = "#{DATA_DIR}/img/done/#{filename}"
 
-      img = MiniMagick::Image.open("#{DATA_DIR}/img/pending/#{filename}")
-      img.resize "#{img_width_small}"
-      img.write "#{DATA_DIR}/img/done/#{filename}_#{img_width_small}"  
-      puts "#{DATA_DIR}/img/done/#{filename}_#{img_width_small} compressed"
+      img = MiniMagick::Image.open(src_dir)
+      img.combine_options do |c|
+        c.resize img_width_large
+        c.quality "90%"
+      end
+      img.write "#{des_dir}_#{img_width_large}"  
+      puts "#{des_dir}_#{img_width_large} compressed"
+
+      img = MiniMagick::Image.open(src_dir)
+      img.combine_options do |c|
+        c.resize img_width_small
+        c.quality "90%"
+      end
+      img.write "#{des_dir}_#{img_width_small}"  
+      puts "#{des_dir}_#{img_width_small} compressed"
+
+      num += 1
+      FileUtils.rm src_dir
     end 
 
     puts "#{num} images compressed."
@@ -106,17 +117,17 @@ module JiaDingWaiMai
   def uploadImg bucket_name = "jiadingwaimai"
     accessKey = "ysm4KDdDLab4Q777LjVvxe_jhDfG7GDhorOSkcAP"
     secretKey = "jcUs2RW2pb3dDCRIBG92CFT_8kXVIyFe--s6B5sO"
-
-    num = 0
     uri = "http://up.qiniu.com/"
     digest = OpenSSL::Digest.new('sha1')
+
+    num = 0 if not num
     Dir.foreach("#{DATA_DIR}/img/done") do |filename|
       next if not File.extname(filename).downcase =~ /\.jpg|\.png/
 
-      num +=1
+      src_dir = "#{DATA_DIR}/img/done/#{filename}"
       putPolicy = Hash.new
       putPolicy[:scope] = "#{bucket_name}:#{filename}"
-      putPolicy[:deadline] = Time.now.to_i + 60 * 60
+      putPolicy[:deadline] = Time.now.to_i + 60 * 60 * 24
 
       putPolicyJSON = JSON.generate putPolicy
       encodedPutPolicy = Base64.strict_encode64 putPolicyJSON
@@ -125,14 +136,22 @@ module JiaDingWaiMai
       encodedSign.gsub!(/\+/, "-")
       uploadToken = "#{accessKey}:#{encodedSign}:#{encodedPutPolicy}"
       RestClient.post(uri,
-                      {:token => uploadToken,
-                       :file => File.new("#{DATA_DIR}/img/done/#{filename}", "rb"),
-                       :key => filename,
-                       :multipart => true})
+                      :token => uploadToken,
+                      :file => File.new(src_dir, "rb"),
+                      :key => filename,
+                      :multipart => true,
+                      :content_type => "image/jpeg")
+
       puts "#{filename} uploaded."
+      num += 1
+      FileUtils.rm src_dir
     end
 
     puts "#{num} imgaes uploaded."
+
+  rescue => e
+    puts e
+    retry
   end
 
   module_function :init, :moveDir, :generateIndex, :mergeData, :compressImg
