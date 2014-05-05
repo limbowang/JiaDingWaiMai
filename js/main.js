@@ -110,4 +110,7 @@ $(document).ready(function () {
         }
       });
   }());
+
+  var waterfall = new Waterfall();
+  waterfall.init('#contents');
 });
