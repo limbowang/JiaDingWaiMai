@@ -43,7 +43,7 @@ module JiaDingWaiMai
   end
 
   def moveDir 
-    needCP = ["./js", "./css", "./img", "./fonts"]
+    needCP = ["./js", "./css", "./fonts", "./robots.txt"]
     FileUtils.cp_r needCP, DESTINATION 
   end
 
@@ -53,22 +53,27 @@ module JiaDingWaiMai
     items = File.read "#{DATA_DIR}/merged/mergedData.json"
     items = JSON.parse items
     data.items = items["items"]
-    data.sidebar = Slim::Template.new("#{LAYOUTS_DIR}/sidebar-list.slim")
+    data.sidebar = Slim::Template
+      .new("#{LAYOUTS_DIR}/sidebar-list.slim", :pretty=>true)
       .render(data)
 
     items = File.read "#{DATA_DIR}/merged/contents-left.json"
     items = JSON.parse items
     data.items = items["items"]
-    data.contents_left = Slim::Template.new("#{LAYOUTS_DIR}/contents.slim")
+    data.contents_left = Slim::Template
+      .new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
       .render(data)
 
     items = File.read "#{DATA_DIR}/merged/contents-right.json"
     items = JSON.parse items
     data.items = items["items"]
-    data.contents_right = Slim::Template.new("#{LAYOUTS_DIR}/contents.slim")
+    data.contents_right = Slim::Template
+      .new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
       .render(data)
 
-    index = Slim::Template.new("#{LAYOUTS_DIR}/index.slim").render(data)
+    index = Slim::Template
+      .new("#{LAYOUTS_DIR}/index.slim", :pretty=>true)
+      .render(data)
     file = File.new "#{DESTINATION}/index.html", "w"
     file.print index 
     file.close
