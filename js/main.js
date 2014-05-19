@@ -25,11 +25,26 @@ $(document).ready(function () {
     });
 
   $('#search-box').on('input propertychange', function () {
-    var input = $(this).val();
-    $('#sidebar-list').find('li').each(function () {
-      if ($(this).text().indexOf(input) < 0) {
+    var input = $(this).val().toLowerCase();
+    var sidebarList = $('#sidebar-list').find('li');
+    if (input == 'random') {
+      var random = Math.floor(Math.random() * sidebarList.length);
+      sidebarList.each(function () {
+        $(this).hide();
+      });
+      sidebarList.eq(random).show();
+      return;
+    }
+
+    sidebarList.each(function () {
+      if ($(this).text().toLowerCase().indexOf(input) != 0) {
         $(this).hide();
       } else {
+        $(this).show();
+      }
+      if ($(this).children('a').first().attr('href')
+        .slice(1).toLowerCase().indexOf(input) == 0) {
+
         $(this).show();
       }
     })
