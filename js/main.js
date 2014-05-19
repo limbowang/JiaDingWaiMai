@@ -57,6 +57,10 @@ $(document).ready(function () {
     });
   });
 
+  $('#contents').imagesLoaded( function () {
+    $('#contents').masonry();
+  });
+
   (function () {
     var
       mousedownX = 0,
