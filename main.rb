@@ -28,7 +28,7 @@ module JiaDingWaiMai
   end
 
   def moveDir 
-    needCP = ["./js", "./css", "./fonts", "./robots.txt"]
+    needCP = ["./js", "./css", "./fonts", "./img", "./robots.txt"]
     FileUtils.cp_r needCP, DESTINATION 
   end
 
@@ -154,7 +154,45 @@ module JiaDingWaiMai
     retry
   end
 
-  module_function :init, :moveDir, :generateIndex, :mergeData, :compressImg
+  def mergeData2
+    items = Array.new
+    height = Array.new
+    Dir.foreach( "#{DATA_DIR}/json" ) do |filename|
+      next if File.extname(filename).downcase != ".json"
+
+      item = File.read "#{DATA_DIR}/json/#{filename}"
+      item = JSON.parse item
+      items.push item
+    end
+
+    left_h, right_h = 0
+    left, right, results = Array.new
+    items.foreach do |item|
+      img = MiniMagick::Image.open("#{DATA_DIR}/img/done/#{item["img"]}_415")
+      if right_h < left_h 
+        right_h += img[:height]
+        right.push item 
+      else 
+        left_h += img[:height]
+        left.push item
+      end 
+    end
+    
+    i, j, k= 0
+    while i<left.size && j<right.size do
+      #if i==left.size
+        #while(j<right.size) 
+      #if k % 2 == 0 
+    end
+
+    results = JSON.pretty_generate({:items=>items})
+    Dir.mkdir "#{DATA_DIR}/merged" if not Dir.exist? "#{DATA_DIR}/merged"
+    file = File.new "#{DATA_DIR}/merged/mergedData.json", "w"
+    file.print results
+    file.close
+  end
+
+  module_function :init, :moveDir, :generateIndex, :mergeData, :compressImg, :mergeData2
 end
 
 

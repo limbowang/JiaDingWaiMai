@@ -15,11 +15,25 @@
       "link": "13801779880"
     },
     {
+      "id": "baosheng",
+      "name": "宝盛中西餐",
+      "description": "",
+      "img": "baosheng.jpg",
+      "link": "18802148886"
+    },
+    {
       "id": "rehuogongfu",
       "name": "热火功夫",
       "description": "加满18元送麻酱3元或四川泡菜2元。可加料：醋，香油，花椒；微辣，中辣，重辣。",
       "img": "rehuogongfu.jpg",
       "link": "13524809743"
+    },
+    {
+      "id": "shihuijiachangcai",
+      "name": "实惠家常菜盖浇饭",
+      "description": "",
+      "img": "shihuijiachangcai.jpg",
+      "link": "13817354483"
     },
     {
       "id": "fujianshaxianxiaochi",
@@ -29,6 +43,34 @@
       "link": "13764736286"
     },
     {
+      "id": "xiaoduoyi",
+      "name": "小朵颐盖浇饭",
+      "description": "",
+      "img": "xiaoduoyi.jpg",
+      "link": "13162937158"
+    },
+    {
+      "id": "tongchenmeishi",
+      "name": "同宸美食",
+      "description": "",
+      "img": "tongchenmeishi.jpg",
+      "link": "15821621348"
+    },
+    {
+      "id": "shuxiangjiayuan",
+      "name": "蜀香家园",
+      "description": "川味菜肴",
+      "img": "shuxiangjiayuan.jpg",
+      "link": "18721928553"
+    },
+    {
+      "id": "jimulide",
+      "name": "吉姆丽德",
+      "description": "",
+      "img": "jimulide.jpg",
+      "link": "69588808"
+    },
+    {
       "id": "manweilou",
       "name": "满味楼",
       "description": "",
@@ -36,11 +78,32 @@
       "link": "13020178887"
     },
     {
+      "id": "haodada",
+      "name": "豪大大香鸡排",
+      "description": "同济大学内20元起送，3公里范围内30元起送",
+      "img": "haodada.jpg",
+      "link": "15821392665"
+    },
+    {
       "id": "kjc",
       "name": "肯德基",
       "description": "",
       "img": "kfc.jpg",
       "link": "www.KFC.com.cn"
+    },
+    {
+      "id": "youzikoufuju",
+      "name": "游子口福居美食馆",
+      "description": "",
+      "img": "youzikoufuju.jpg",
+      "link": "13764248899"
+    },
+    {
+      "id": "lehui",
+      "name": "乐惠",
+      "description": "",
+      "img": "lehui.jpg",
+      "link": "13764334193"
     },
     {
       "id": "lanzhouniuroulamian",
@@ -62,6 +125,20 @@
       "description": "",
       "img": "shihuikuaican.jpg",
       "link": "18801802143"
+    },
+    {
+      "id": "chongqingjigongbao",
+      "name": "重庆鸡公煲",
+      "description": "",
+      "img": "chongqingjigongbao.jpg",
+      "link": "18802148886"
+    },
+    {
+      "id": "xiangyuegeyexiao",
+      "name": "湘粤阁夜宵",
+      "description": "10元起送",
+      "img": "xiangyuegeyexiao.jpg",
+      "link": "13801779880"
     },
     {
       "id": "xinruyi",
