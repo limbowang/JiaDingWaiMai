@@ -204,6 +204,12 @@ body {
     height: auto;
   }
 
+  .thumbnail {
+    width: auto;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
   .thumbnail .title,
   .thumbnail .content {
     text-align: center;
