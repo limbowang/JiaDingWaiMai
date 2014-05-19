@@ -75,8 +75,10 @@ body {
 }
 
 .thumbnail {
-  width: 40%;
-  margin: 0 30px 15px 15px;
+  /*width: 40%;*/
+  width: 440px;
+  height: auto;
+  margin: 0 15px 30px 15px;
 }
 
 .thumbnail img {
