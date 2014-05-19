@@ -9,6 +9,8 @@ html
     link rel="stylesheet" href="css/main.css"
 
     script src="js/jquery-1.11.0.min.js"
+    script src="js/masonry.pkgd.min.js"
+    script src="js/imagesloaded.pkgd.min.js"
     script src="js/main.js"
     script src="js/mobile.js"
 
@@ -39,10 +41,7 @@ html
               == sidebar
         
       #contents
-        .col-md-6#contents-left
-          == contents_left
-        .col-md-6#contents-right
-          == contents_right
+        == contents
 
 
     #image-extended

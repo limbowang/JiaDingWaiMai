@@ -18,7 +18,7 @@ module JiaDingWaiMai
   
   class Content
     attr_accessor :items, :sidebar,
-      :contents_left, :contents_right
+      :contents, :contents_left, :contents_right
   end
 
   def init
@@ -42,17 +42,21 @@ module JiaDingWaiMai
       .new("#{LAYOUTS_DIR}/sidebar-list.slim", :pretty=>true)
       .render(data)
 
-    items = File.read "#{DATA_DIR}/merged/contents-left.json"
-    items = JSON.parse items
-    data.items = items["items"]
-    data.contents_left = Slim::Template
-      .new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
-      .render(data)
+#    items = File.read "#{DATA_DIR}/merged/contents-left.json"
+    #items = JSON.parse items
+    #data.items = items["items"]
+    #data.contents_left = Slim::Template
+      #.new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
+      #.render(data)
 
-    items = File.read "#{DATA_DIR}/merged/contents-right.json"
-    items = JSON.parse items
-    data.items = items["items"]
-    data.contents_right = Slim::Template
+    #items = File.read "#{DATA_DIR}/merged/contents-right.json"
+    #items = JSON.parse items
+    #data.items = items["items"]
+    #data.contents_right = Slim::Template
+      #.new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
+      #.render(data)
+
+    data.contents = Slim::Template
       .new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
       .render(data)
 

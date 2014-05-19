@@ -74,6 +74,11 @@ body {
   padding-left: 80px;
 }
 
+.thumbnail {
+  width: 40%;
+  margin: 0 30px 15px 15px;
+}
+
 .thumbnail img {
   width: 340px;
 }
