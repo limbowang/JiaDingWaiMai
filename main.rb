@@ -70,14 +70,15 @@ module JiaDingWaiMai
 
   def mergeData
     items = Array.new
-    Dir.foreach( "#{DATA_DIR}/json" ) do |filename|
+    Dir.glob( "#{DATA_DIR}/json/*" ) do |filename|
       next if File.extname(filename).downcase != ".json"
 
-      item = File.read "#{DATA_DIR}/json/#{filename}"
+      item = File.read filename
       item = JSON.parse item
       items.push item
     end
     
+    items.sort!{|x, y| x["id"]<=>y["id"]}
     results = JSON.pretty_generate({:items=>items})
     Dir.mkdir "#{DATA_DIR}/merged" if not Dir.exist? "#{DATA_DIR}/merged"
     file = File.new "#{DATA_DIR}/merged/mergedData.json", "w"
