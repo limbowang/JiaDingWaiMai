@@ -37,7 +37,8 @@ $(document).ready(function () {
     }
 
     sidebarList.each(function () {
-      if ($(this).text().toLowerCase().indexOf(input) != 0) {
+      if ($(this).children('a').first().text()
+        .toLowerCase().indexOf(input) != 0) {
         $(this).hide();
       } else {
         $(this).show();
