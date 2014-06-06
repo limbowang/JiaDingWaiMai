@@ -28,7 +28,7 @@ module JiaDingWaiMai
   end
 
   def moveDir 
-    needCP = ["./js", "./css", "./fonts", "./img", "./robots.txt"]
+    needCP = ["./js", "./css", "./fonts", "./img"]
     FileUtils.cp_r needCP, DESTINATION 
   end
 
