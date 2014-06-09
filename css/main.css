@@ -125,6 +125,13 @@ body {
   visibility: hidden;
 }
 
+#github-ribbon img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
 @media screen and (max-width: 767px) {
   .layout {
     padding: 0;
