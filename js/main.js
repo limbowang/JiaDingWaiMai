@@ -26,17 +26,24 @@ $(document).ready(function () {
 
   $('#search-box').on('input propertychange', function () {
     var input = $(this).val().toLowerCase();
-    var sidebarList = $('#sidebar-list').find('li');
+    var sidebarList = $('#sidebar-list');
+    var siderbarListItems = sidebarList.find('li');
+
+    // set top of sidebar content to 0
+    sidebarList.css({
+      top: 0
+    });
+
     if (input == 'random') {
-      var random = Math.floor(Math.random() * sidebarList.length);
-      sidebarList.each(function () {
+      var random = Math.floor(Math.random() * siderbarListItems.length);
+      siderbarListItems.each(function () {
         $(this).hide();
       });
-      sidebarList.eq(random).show();
+      siderbarListItems.eq(random).show();
       return;
     }
 
-    sidebarList.each(function () {
+    siderbarListItems.each(function () {
       if ($(this).children('a').first().text()
         .toLowerCase().indexOf(input) != 0) {
         $(this).hide();
@@ -73,7 +80,7 @@ $(document).ready(function () {
     });
   });
 
-  $('#contents').imagesLoaded( function () {
+  $('#contents').imagesLoaded(function () {
     $('#contents').masonry();
   });
 
