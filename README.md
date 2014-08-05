@@ -8,3 +8,10 @@ JiaDingWaiMai
 - ~~重新生成静态页面，不用ejs前端载入数据~~
 - ~~前端使用瀑布流算法重新排版~~
 - ~~使用Ruby重新写压缩图片和合并JSON的工具~~
+
+##  To be update -- DDL: Nov.10
+
+- GoMax
+- jidong
+- Check 吉姆丽德 newest verson?
+- ...to be continue...
