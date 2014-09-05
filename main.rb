@@ -17,8 +17,7 @@ module JiaDingWaiMai
   DESTINATION = "./_site"
   
   class Content
-    attr_accessor :items, :sidebar,
-      :contents, :contents_left, :contents_right
+    attr_accessor :items, :sidebar, :contents 
   end
 
   def init
@@ -28,44 +27,31 @@ module JiaDingWaiMai
   end
 
   def moveDir 
-    needCP = ["./js", "./css", "./fonts", "./img"]
+    needCP = ["./js", "./css", "./fonts"]
     FileUtils.cp_r needCP, DESTINATION 
   end
 
   def generateIndex
     data = Content.new
-
     items = File.read "#{DATA_DIR}/merged/mergedData.json"
     items = JSON.parse items
     data.items = items["items"]
+
     data.sidebar = Slim::Template
-      .new("#{LAYOUTS_DIR}/sidebar-list.slim", :pretty=>true)
+      .new("#{LAYOUTS_DIR}/sidebar-list.slim", :pretty => true)
       .render(data)
-
-#    items = File.read "#{DATA_DIR}/merged/contents-left.json"
-    #items = JSON.parse items
-    #data.items = items["items"]
-    #data.contents_left = Slim::Template
-      #.new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
-      #.render(data)
-
-    #items = File.read "#{DATA_DIR}/merged/contents-right.json"
-    #items = JSON.parse items
-    #data.items = items["items"]
-    #data.contents_right = Slim::Template
-      #.new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
-      #.render(data)
-
     data.contents = Slim::Template
-      .new("#{LAYOUTS_DIR}/contents.slim", :pretty=>true)
+      .new("#{LAYOUTS_DIR}/contents.slim", :pretty => true)
+      .render(data)
+    index = Slim::Template
+      .new("#{LAYOUTS_DIR}/index.slim", :pretty => true)
       .render(data)
 
-    index = Slim::Template
-      .new("#{LAYOUTS_DIR}/index.slim", :pretty=>true)
-      .render(data)
     file = File.new "#{DESTINATION}/index.html", "w"
     file.print index 
     file.close
+
+    puts "Generated the #{DESTINATION}/index.html"
   end
 
   def mergeData
@@ -89,6 +75,8 @@ module JiaDingWaiMai
   end
 
   def compressImg(img_width_small=415, img_width_large=1024)
+    return puts "No pending image to compress." if not Dir.exist? "#{DATA_DIR}/img/pending" 
+
     num = 0
     Dir.foreach("#{DATA_DIR}/img/pending") do |filename|
       next if not File.extname(filename).downcase =~ /\.jpg|\.png/
@@ -119,12 +107,14 @@ module JiaDingWaiMai
     puts "#{num} images compressed."
   end
 
-  def uploadImg bucket_name = "jiadingwaimai"
+  def uploadImg 
+    bucket_name = "jiadingwaimai"
     accessKey = "ysm4KDdDLab4Q777LjVvxe_jhDfG7GDhorOSkcAP"
     secretKey = "jcUs2RW2pb3dDCRIBG92CFT_8kXVIyFe--s6B5sO"
     uri = "http://up.qiniu.com/"
     digest = OpenSSL::Digest.new('sha1')
 
+    return puts "No image to upload." if not Dir.exist? "#{DATA_DIR}/img/done"
     num = 0 if not num
     Dir.foreach("#{DATA_DIR}/img/done") do |filename|
       next if not File.extname(filename).downcase =~ /\.jpg|\.png/
@@ -207,6 +197,9 @@ class MyCommand < Thor
   desc "build", "Build your site."
   def build
     init
+    mergeData
+    compressImg
+    uploadImg
     moveDir
     generateIndex
   end
