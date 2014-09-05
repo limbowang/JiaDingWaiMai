@@ -75,61 +75,47 @@ module JiaDingWaiMai
   end
 
   def compressImg(img_width_small=415, img_width_large=1024)
-    return puts "No pending image to compress." if not Dir.exist? "#{DATA_DIR}/img/pending" 
+    return puts "No pending image to compress." if not Dir.exist? "#{DATA_DIR}/img" 
 
     num = 0
-    Dir.foreach("#{DATA_DIR}/img/pending") do |filename|
-      next if not File.extname(filename).downcase =~ /\.jpg|\.png/
+    Dir.foreach("#{DATA_DIR}/img") do |filename|
+      next if not File.extname(filename).downcase == ".jpg"
 
-      src_dir = "#{DATA_DIR}/img/pending/#{filename}"
-      des_dir = "#{DATA_DIR}/img/done/#{filename}"
+      src_dir = "#{DATA_DIR}/img/#{filename}"
 
       img = MiniMagick::Image.open(src_dir)
       img.combine_options do |c|
         c.resize img_width_large
         c.quality "90%"
       end
-      img.write "#{des_dir}_#{img_width_large}"  
-      puts "#{des_dir}_#{img_width_large} compressed"
+      img.write "#{src_dir}_#{img_width_large}"  
+      puts "#{src_dir}_#{img_width_large} compressed"
 
       img = MiniMagick::Image.open(src_dir)
       img.combine_options do |c|
         c.resize img_width_small
         c.quality "90%"
       end
-      img.write "#{des_dir}_#{img_width_small}"  
-      puts "#{des_dir}_#{img_width_small} compressed"
+      img.write "#{src_dir}_#{img_width_small}"  
+      puts "#{src_dir}_#{img_width_small} compressed"
 
       num += 1
-      FileUtils.rm src_dir
     end 
 
     puts "#{num} images compressed."
   end
 
   def uploadImg 
-    bucket_name = "jiadingwaimai"
-    accessKey = "ysm4KDdDLab4Q777LjVvxe_jhDfG7GDhorOSkcAP"
-    secretKey = "jcUs2RW2pb3dDCRIBG92CFT_8kXVIyFe--s6B5sO"
     uri = "http://up.qiniu.com/"
-    digest = OpenSSL::Digest.new('sha1')
 
-    return puts "No image to upload." if not Dir.exist? "#{DATA_DIR}/img/done"
+    return puts "No image to upload." if not Dir.exist? "#{DATA_DIR}/img"
     num = 0 if not num
-    Dir.foreach("#{DATA_DIR}/img/done") do |filename|
+    Dir.foreach("#{DATA_DIR}/img") do |filename|
       next if not File.extname(filename).downcase =~ /\.jpg|\.png/
 
-      src_dir = "#{DATA_DIR}/img/done/#{filename}"
-      putPolicy = Hash.new
-      putPolicy[:scope] = "#{bucket_name}:#{filename}"
-      putPolicy[:deadline] = Time.now.to_i + 60 * 60 * 24
+      src_dir = "#{DATA_DIR}/img/#{filename}"
 
-      putPolicyJSON = JSON.generate putPolicy
-      encodedPutPolicy = Base64.strict_encode64 putPolicyJSON
-      sign = OpenSSL::HMAC.digest(digest, secretKey, encodedPutPolicy)
-      encodedSign = Base64.strict_encode64 sign
-      encodedSign.gsub!(/\+/, "-")
-      uploadToken = "#{accessKey}:#{encodedSign}:#{encodedPutPolicy}"
+      uploadToken = generateUploadToken(filename)
       RestClient.post(uri,
                       :token => uploadToken,
                       :file => File.new(src_dir, "rb"),
@@ -145,49 +131,30 @@ module JiaDingWaiMai
     puts "#{num} imgaes uploaded."
 
   rescue => e
-    puts e
+    #puts e
     retry
   end
 
-  def mergeData2
-    items = Array.new
-    height = Array.new
-    Dir.foreach( "#{DATA_DIR}/json" ) do |filename|
-      next if File.extname(filename).downcase != ".json"
+  def generateUploadToken filename
+    # this config should not write in here
+    bucket_name = "jiadingwaimai"
+    accessKey = "ysm4KDdDLab4Q777LjVvxe_jhDfG7GDhorOSkcAP"
+    secretKey = "jcUs2RW2pb3dDCRIBG92CFT_8kXVIyFe--s6B5sO"
 
-      item = File.read "#{DATA_DIR}/json/#{filename}"
-      item = JSON.parse item
-      items.push item
-    end
+    digest = OpenSSL::Digest.new('sha1')
+    putPolicy = Hash.new
+    putPolicy[:scope] = "#{bucket_name}:#{filename}"
+    putPolicy[:deadline] = Time.now.to_i + 60 * 60 * 24
 
-    left_h, right_h = 0
-    left, right, results = Array.new
-    items.foreach do |item|
-      img = MiniMagick::Image.open("#{DATA_DIR}/img/done/#{item["img"]}_415")
-      if right_h < left_h 
-        right_h += img[:height]
-        right.push item 
-      else 
-        left_h += img[:height]
-        left.push item
-      end 
-    end
-    
-    i, j, k= 0
-    while i<left.size && j<right.size do
-      #if i==left.size
-        #while(j<right.size) 
-      #if k % 2 == 0 
-    end
-
-    results = JSON.pretty_generate({:items=>items})
-    Dir.mkdir "#{DATA_DIR}/merged" if not Dir.exist? "#{DATA_DIR}/merged"
-    file = File.new "#{DATA_DIR}/merged/mergedData.json", "w"
-    file.print results
-    file.close
+    putPolicyJSON = JSON.generate putPolicy
+    encodedPutPolicy = Base64.strict_encode64 putPolicyJSON
+    sign = OpenSSL::HMAC.digest(digest, secretKey, encodedPutPolicy)
+    encodedSign = Base64.strict_encode64 sign
+    encodedSign.gsub!(/\+/, "-")
+    uploadToken = "#{accessKey}:#{encodedSign}:#{encodedPutPolicy}"
   end
 
-  module_function :init, :moveDir, :generateIndex, :mergeData, :compressImg, :mergeData2
+  module_function :init, :moveDir, :generateIndex, :mergeData, :compressImg
 end
 
 
