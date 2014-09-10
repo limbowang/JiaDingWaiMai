@@ -35,7 +35,7 @@ JiaDingWaiMai
 
 ##  To be update
 
-- GoMax
+- GoMax（暂无照片数据，待更新）
 - ~~jidong~~
-- Check 吉姆丽德 newest verson?
+- ~~Check 吉姆丽德 newest verson?(已更新最新版外卖单)~~
 - ...to be continue...
