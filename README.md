@@ -36,6 +36,6 @@ JiaDingWaiMai
 ##  To be update
 
 - GoMax
-- jidong
+- ~~jidong~~
 - Check 吉姆丽德 newest verson?
 - ...to be continue...
