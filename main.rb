@@ -15,9 +15,9 @@ module JiaDingWaiMai
   DATA_DIR = "./data"
   LAYOUTS_DIR = "./layouts"
   DESTINATION = "./_site"
-  
+
   class Content
-    attr_accessor :items, :sidebar, :contents 
+    attr_accessor :items, :sidebar, :contents
   end
 
   def init
@@ -26,9 +26,9 @@ module JiaDingWaiMai
     FileUtils.rm_r Dir.glob("#{DESTINATION}/*")
   end
 
-  def moveDir 
+  def moveDir
     needCP = ["./js", "./css", "./fonts"]
-    FileUtils.cp_r needCP, DESTINATION 
+    FileUtils.cp_r needCP, DESTINATION
   end
 
   def generateIndex
@@ -48,7 +48,7 @@ module JiaDingWaiMai
       .render(data)
 
     file = File.new "#{DESTINATION}/index.html", "w"
-    file.print index 
+    file.print index
     file.close
 
     puts "Generated the #{DESTINATION}/index.html"
@@ -63,7 +63,7 @@ module JiaDingWaiMai
       item = JSON.parse item
       items.push item
     end
-    
+
     items.sort!{|x, y| x["id"]<=>y["id"]}
     results = JSON.pretty_generate({:items=>items})
     Dir.mkdir "#{DATA_DIR}/merged" if not Dir.exist? "#{DATA_DIR}/merged"
@@ -75,7 +75,7 @@ module JiaDingWaiMai
   end
 
   def compressImg(img_width_small=415, img_width_large=1024)
-    return puts "No pending image to compress." if not Dir.exist? "#{DATA_DIR}/img" 
+    return puts "No pending image to compress." if not Dir.exist? "#{DATA_DIR}/img"
 
     num = 0
     Dir.foreach("#{DATA_DIR}/img") do |filename|
@@ -88,7 +88,7 @@ module JiaDingWaiMai
         c.resize img_width_large
         c.quality "90%"
       end
-      img.write "#{src_dir}_#{img_width_large}"  
+      img.write "#{src_dir}_#{img_width_large}"
       puts "#{src_dir}_#{img_width_large} compressed"
 
       img = MiniMagick::Image.open(src_dir)
@@ -96,16 +96,16 @@ module JiaDingWaiMai
         c.resize img_width_small
         c.quality "90%"
       end
-      img.write "#{src_dir}_#{img_width_small}"  
+      img.write "#{src_dir}_#{img_width_small}"
       puts "#{src_dir}_#{img_width_small} compressed"
 
       num += 1
-    end 
+    end
 
     puts "#{num} images compressed."
   end
 
-  def uploadImg 
+  def uploadImg
     uri = "http://up.qiniu.com/"
 
     return puts "No image to upload." if not Dir.exist? "#{DATA_DIR}/img"
@@ -185,6 +185,21 @@ class MyCommand < Thor
   def upload
     uploadImg
   end
+
+  desc "genIndex", "Generate your site index.html ."
+  def genIndex
+    generateIndex
+  end
+
+  desc "build2", "Build your site after manual merge."
+  def build2
+    init
+    compressImg
+    uploadImg
+    moveDir
+    generateIndex
+  end
+  
 end
 
 
