@@ -39,3 +39,6 @@ JiaDingWaiMai
 - ~~jidong~~
 - ~~Check 吉姆丽德 newest verson?(已更新最新版外卖单)~~
 - ...to be continue...
+
+
+##  Log
