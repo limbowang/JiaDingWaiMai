@@ -3,3 +3,4 @@ node_modules
 Gemfile.lock
 _site
 _imgtemp
+_site/img
