@@ -199,7 +199,13 @@ class MyCommand < Thor
     moveDir
     generateIndex
   end
-  
+
+  desc "updateImg", "Use this command when a image has a new version."
+  def updateImg
+    compressImg
+    uploadImg
+  end
+
 end
 
 
