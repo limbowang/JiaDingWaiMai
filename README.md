@@ -36,9 +36,13 @@ JiaDingWaiMai
 ##  To be update
 
 - GoMax（暂无照片数据，待更新）
-- ~~jidong~~
-- ~~Check 吉姆丽德 newest verson?(已更新最新版外卖单)~~
+- 豪大大
+- 迷彩餐厅
+- 热火
 - ...to be continue...
 
 
 ##  Log
+
+- ~~jidong~~
+- ~~Check 吉姆丽德 newest verson?(已更新最新版外卖单)~~
