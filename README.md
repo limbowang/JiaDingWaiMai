@@ -4,6 +4,7 @@ JiaDingWaiMai
 ## Introduction
 
 上海同济大学嘉定校区附近外卖大全
+网址：http://waimai.tzwm.me
 
 
 ## Setup
