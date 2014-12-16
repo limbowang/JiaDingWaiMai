@@ -79,10 +79,9 @@ $(document).ready(function () {
       });
     });
   });
-
-  $('#contents').imagesLoaded(function () {
-    $('#contents').masonry();
-  });
+  
+  $('#contents').data('bootstrap-waterfall-template', $('#bootstrap-waterfall-template').html());
+  $('#contents').waterfall();
 
   (function () {
     var
