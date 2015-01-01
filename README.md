@@ -37,6 +37,7 @@ JiaDingWaiMai
 ##  To be update
 
 - GoMax（暂无照片数据，待更新，最近要更新）
+- ~~更新waimaiji.jpg 增加外卖单黄焖鸡米饭~~
 - ~~更新xinruyi.jpg~~
 - 豪大大照片更新，只是更新了手机 但是没有更新照片
 - ...to be continue...
