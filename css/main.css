@@ -70,6 +70,7 @@ body {
 }
 
 #contents {
+  position: relative;
   padding-top: 20px;
   padding-left: 80px;
 }
@@ -203,6 +204,7 @@ body {
   }
 
   #contents {
+    position: relative;
     padding-top: 60px;
     padding-left: 0;
   }
