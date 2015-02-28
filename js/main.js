@@ -80,9 +80,7 @@ $(document).ready(function () {
     });
   });
 
-  $('#contents').imagesLoaded(function () {
-    $('#contents').masonry();
-  });
+  $('#contents').waterfall();
 
   (function () {
     var
