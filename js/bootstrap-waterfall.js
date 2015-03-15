@@ -93,6 +93,7 @@
   var Waterfall = function (element, options) {
     this.$element = $(element)
     this.options = $.extend({}, Waterfall.DEFAULTS, options)
+    this.$fakePin = null
     this.$container = null
     this.$pins = null
     this.pinWidth = null
@@ -105,12 +106,14 @@
 
     this
       .init()
+      .calculateWidth()
+      .calculatePosition()
       .sail()
-      .compassWatch()
       .bindResize()
+      .compassWatch()
   }
 
-  Waterfall.VERSION = '0.1.6'
+  Waterfall.VERSION = '0.2.0'
 
   Waterfall.DEFAULTS = {
   }
@@ -118,9 +121,7 @@
   Waterfall.prototype.init = function () {
     this
       .initPins()
-      .initContainer()
       .initAttributes()
-      .initPosition()
 
     return this
   }
@@ -140,27 +141,29 @@
     return this
   }
 
-  Waterfall.prototype.initContainer = function () {
+  Waterfall.prototype.initAttributes = function () {
+    // Use fake pin to calculate per pin's width which set by user via CSS.
+    this.$fakePin = this.$pins.first().clone()
+
     this.$container = $('<div />').css('position', 'relative')
     this.$element.html(this.$container)
 
     return this
   }
 
-  Waterfall.prototype.initAttributes = function () {
-    // Use fake element to get per pin's width which set by user via CSS.
-    var $fakePin = this.$pins.first().clone()
-    this.$container.append($fakePin.css('opacity', 0))
+  Waterfall.prototype.calculateWidth = function () {
+    var $clone = this.$fakePin.clone()
+    this.$container.append($clone.css('opacity', 0))
 
-    this.pinWidth = $fakePin.outerWidth(true)
-    this.imgWidth = $fakePin.find('img:eq(0)').width()
+    this.pinWidth = $clone.outerWidth(true)
+    this.imgWidth = $clone.find('img:eq(0)').width()
 
-    $fakePin.remove()
+    $clone.remove()
 
     return this
   }
 
-  Waterfall.prototype.initPosition = function () {
+  Waterfall.prototype.calculatePosition = function () {
     var counts = parseInt((this.$container.width() / this.pinWidth), 10)
 
     var lefts = []
@@ -176,26 +179,13 @@
   }
 
   Waterfall.prototype.scrollCallback = function () {
-    var that = this
-    return _.throttle(function () {
-      if (self.isWantMore.call(that)) {
-        that
+    return _.throttle($.proxy(function () {
+      if (self.isWantMore.call(this)) {
+        this
           .unbindScroll()
           .sail()
       }
-    }, 500)
-  }
-
-  Waterfall.prototype.bindScroll = function () {
-    $(window).on('scroll', this.scrollCallback)
-
-    return this
-  }
-
-  Waterfall.prototype.unbindScroll = function () {
-    $(window).off('scroll', this.scrollCallback)
-
-    return this
+    }, this), 500)
   }
 
   Waterfall.prototype.sail = function () {
@@ -239,10 +229,12 @@
       top: position.top
     })
 
-    if ($pin.data('bootstrap-waterfall-pin')) { // Will be true when the image is loaded or reloaded.
+    if ($pin.data('bootstrap-waterfall-pin')) {
       self.setImageHeight.call(this, $pin)
+    }
+    if ($pin.data('bootstrap-waterfall-src')) {
       self.makeImageAvailable.call(this, $pin)
-      $pin.removeData('bootstrap-waterfall-pin')
+      $pin.removeData('bootstrap-waterfall-src')
     }
 
     this.$container.append($pin)
@@ -259,34 +251,48 @@
     return this
   }
 
-  Waterfall.prototype.compassWatch = function () {
-    var that = this
-    this.compassTimerId = setInterval(function () {
-      if (that.$element.closest('body').length < 1) { // Check if user had left the page.
-        that.destroy()
-      }
-    }, 777)
-
-    return this
-  }
-
-  Waterfall.prototype.compassClose = function () {
-    clearInterval(this.compassTimerId)
-
-    return this
-  }
-
   Waterfall.prototype.resizeCallback = function () {
-    var that = this
-    return _.debounce(function () {
-      that
+    return _.debounce($.proxy(function () {
+      this
         .unbindScroll()
-        .initAttributes()
-        .initPosition()
-        .render(self.getLoadedPins.call(that))
-        .updateHeight()
-        .bindScroll()
-    }, 777)
+        .calculateWidth()
+        .calculatePosition()
+        .ship(self.getLoadedPins.call(this))
+    }, this), 777)
+  }
+
+  Waterfall.prototype.compassWatch = function () {
+    this.compassTimerId = setInterval($.proxy(function () {
+      if (this.$element.closest('body').length < 1) { // Check if user had left the page.
+        this.destroy()
+      }
+    }, this), 777)
+
+    return this
+  }
+
+  Waterfall.prototype.destroy = function () {
+    this
+      .unbindScroll()
+      .unbindResize()
+      .compassUnwatch()
+      .$element
+        .empty()
+        .removeData('mystist.waterfall')
+
+    return this
+  }
+
+  Waterfall.prototype.bindScroll = function () {
+    $(window).on('scroll', this.scrollCallback)
+
+    return this
+  }
+
+  Waterfall.prototype.unbindScroll = function () {
+    $(window).off('scroll', this.scrollCallback)
+
+    return this
   }
 
   Waterfall.prototype.bindResize = function () {
@@ -301,12 +307,9 @@
     return this
   }
 
-  Waterfall.prototype.destroy = function () {
-    this
-      .unbindScroll()
-      .unbindResize()
-      .compassClose()
-      .$element.remove()
+  Waterfall.prototype.compassUnwatch = function () {
+    clearInterval(this.compassTimerId)
+    this.compassTimerId = null
 
     return this
   }
@@ -356,10 +359,7 @@
       })
     },
     makeImageAvailable: function ($pin) {
-      if ($pin.data('bootstrap-waterfall-src')) {
-        $pin.find('img:eq(0)').attr('src', $pin.data('bootstrap-waterfall-src'))
-        $pin.removeData('bootstrap-waterfall-src')
-      }
+      $pin.find('img:eq(0)').attr('src', $pin.data('bootstrap-waterfall-src'))
     },
     updatePosition: function (index, $pin) {
       this.tops[index] += $pin.outerHeight(true)
@@ -387,10 +387,9 @@
   }
 
   Loader.prototype.run = function () {
-    var that = this
-    this.timerId = setInterval(function () {
-      that.isDone() ? that.stop() : that.check()
-    }, 40)
+    this.timerId = setInterval($.proxy(function () {
+      this.isDone() ? this.stop() : this.check()
+    }, this), 40)
 
     return this
   }
@@ -401,6 +400,7 @@
 
   Loader.prototype.stop = function () {
     clearInterval(this.timerId)
+    this.timerId = null
     this.deferred.resolve()
   }
 
@@ -446,6 +446,7 @@
       var options = typeof option == 'object' && option
 
       if (!data) $this.data('mystist.waterfall', (data = new Waterfall(this, options)))
+      if (typeof option == 'string') data[option]()
     })
   }
 
